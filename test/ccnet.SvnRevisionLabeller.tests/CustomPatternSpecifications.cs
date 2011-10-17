@@ -21,7 +21,7 @@ namespace CcNet.Labeller.Tests
 
 			_mockery.ReplayAll();
 	
-			_labeller = new SvnRevisionLabellerStub();
+			_labeller = new BzrRevisionLabellerStub();
 			_labeller.SetRevision(5);
 			_labeller.Pattern = "Custom {major}.{minor}.4.{revision} label";
 			_labeller.Major = 2;
@@ -39,7 +39,7 @@ namespace CcNet.Labeller.Tests
 			Assert.That(_label, Is.EqualTo("Custom 2.3.4.5 label"));
 		}
 
-		private SvnRevisionLabellerStub _labeller;
+		private BzrRevisionLabellerStub _labeller;
 		private IIntegrationResult _previousResult;
 		private string _label;
 	}

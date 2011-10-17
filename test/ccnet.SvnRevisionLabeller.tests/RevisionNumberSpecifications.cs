@@ -9,7 +9,7 @@ namespace CcNet.Labeller.Tests
 	[TestFixture]
 	public class WhenRevisionPropertyIsNotSetAndLabelIsGeneratedAfterASuccessfulBuild : Specification
 	{
-		private SvnRevisionLabellerStub _labeller;
+		private BzrRevisionLabellerStub _labeller;
 		private IIntegrationResult _previousResult;
 		private string _label;
 
@@ -25,7 +25,7 @@ namespace CcNet.Labeller.Tests
 
 			_mockery.ReplayAll();
 	
-			_labeller = new SvnRevisionLabellerStub();
+			_labeller = new BzrRevisionLabellerStub();
 			_labeller.SetRevision(105);
 		}
 

@@ -3,10 +3,10 @@
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CruiseControl.NET Subversion Labeller Tests")]
-[assembly: AssemblyDescription("Provides test for Subversion revision labelling for CruiseControl.NET")]
+[assembly: AssemblyTitle("CruiseControl.NET Bazaar Labeller Tests")]
+[assembly: AssemblyDescription("Provides test for Bazaar revision labelling for CruiseControl.NET")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("David Keaveny")]
+[assembly: AssemblyCompany("trident_job")]
 [assembly: AssemblyProduct("")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
@@ -23,4 +23,4 @@
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("1.0.4.*")]
+[assembly: AssemblyVersion("1.0.0.*")]

@@ -10,7 +10,7 @@ namespace CcNet.Labeller.Tests
 	[TestFixture]
 	public class DateSpecifications : Specification
 	{
-		private SvnRevisionLabellerStub _labeller;
+		private BzrRevisionLabellerStub _labeller;
 		private IIntegrationResult _previousResult;
 		private string _label;
 
@@ -27,7 +27,7 @@ namespace CcNet.Labeller.Tests
 
 			_mockery.ReplayAll();
 
-			_labeller = new SvnRevisionLabellerStub(fakeSystemClock)
+			_labeller = new BzrRevisionLabellerStub(fakeSystemClock)
 				{
 					StartDate = "20/08/2010",
 					Pattern = "1.0.{date}.0"

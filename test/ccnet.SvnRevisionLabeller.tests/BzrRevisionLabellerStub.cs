@@ -1,12 +1,12 @@
 namespace CcNet.Labeller.Tests
 {
-	public class SvnRevisionLabellerStub : SvnRevisionLabeller
+	public class BzrRevisionLabellerStub : SvnRevisionLabeller
 	{
-		public SvnRevisionLabellerStub()
+		public BzrRevisionLabellerStub()
 		{
 		}
 
-		public SvnRevisionLabellerStub(ISystemClock systemClock) : base(systemClock)
+		public BzrRevisionLabellerStub(ISystemClock systemClock) : base(systemClock)
 		{
 		}
 
