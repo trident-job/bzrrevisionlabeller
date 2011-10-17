@@ -85,7 +85,7 @@
     <Compile Include="RevisionNumberSpecifications.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\ccnet.SvnRevisionLabeller.plugin\ccnet.BzrRevisionLabeller.plugin.csproj">
+    <ProjectReference Include="..\..\src\ccnet.BzrRevisionLabeller.plugin\ccnet.BzrRevisionLabeller.plugin.csproj">
       <Project>{A0CA66FE-0C8D-4CD1-AF45-EA6E18D57ACC}</Project>
       <Name>ccnet.BzrRevisionLabeller.plugin</Name>
     </ProjectReference>
