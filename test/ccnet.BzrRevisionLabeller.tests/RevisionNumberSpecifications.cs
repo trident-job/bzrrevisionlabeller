@@ -35,7 +35,7 @@ namespace CcNet.Labeller.Tests
 		}
 
 		[Test]
-		public void RevisionNumberIsSetToTheCurrentSvnRevisionNumber()
+		public void RevisionNumberIsSetToTheCurrentBzrRevisionNumber()
 		{
 			Assert.That(_label, Is.EqualTo("1.0.0.105"));
 		}

@@ -1,0 +1,5 @@
+./BzrRevisionLabeller.suo
+./src/ccnet.BzrRevisionLabeller.plugin/bin
+./src/ccnet.BzrRevisionLabeller.plugin/obj
+./test/ccnet.BzrRevisionLabeller.tests/obj
+./test/ccnet.BzrRevisionLabeller.tests/bin

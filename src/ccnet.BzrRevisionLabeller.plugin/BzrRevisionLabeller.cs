@@ -12,7 +12,7 @@ namespace CcNet.Labeller
 	/// <summary>
 	/// Generates CC.NET label numbers using the Microsoft-recommended versioning 
 	/// format (ie. Major.Minor.Build.Revision). The build number is auto-
-	/// incremented for each successful build, and the latest Subversion commit number
+	/// incremented for each successful build, and the latest Bazaar commit number
 	/// is used to generate the revision. The resultant label is accessible from 
 	/// apps such as MSBuild via the <c>$(CCNetLabel)</c> property , and NAnt via 
 	/// the <c>${CCNetLabel}</c> property.
@@ -39,8 +39,8 @@ namespace CcNet.Labeller
 	/// </ul>
 	/// </para>
 	/// </remarks>
-	[ReflectorType("svnRevisionLabeller")]
-	public class SvnRevisionLabeller : ILabeller
+	[ReflectorType("bzrRevisionLabeller")]
+	public class BzrRevisionLabeller : ILabeller
 	{
 		private const string MajorToken = "{major}";
 		private const string MinorToken = "{minor}";
@@ -49,25 +49,25 @@ namespace CcNet.Labeller
 		private const string RebuildToken = "{rebuild}";
 		private const string DateToken = "{date}";
 		private const string MsRevisionToken = "{msrevision}";
-		private const string RevisionXPath = "/log/logentry/@revision";
+        private const string RevisionXPath = "/logs/log/revno";
 		private readonly ISystemClock _systemClock;
 		private int _rebuild;
 
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SvnRevisionLabeller"/> class.
+		/// Initializes a new instance of the <see cref="BzrRevisionLabeller"/> class.
 		/// </summary>
-		public SvnRevisionLabeller() : this(new SystemClock())
+		public BzrRevisionLabeller() : this(new SystemClock())
 		{
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SvnRevisionLabeller"/> class.
+		/// Initializes a new instance of the <see cref="BzrRevisionLabeller"/> class.
 		/// </summary>
 		/// <param name="systemClock">The system clock implementation that will be used when calculating date-based
 		/// revision numbers.</param>
-		public SvnRevisionLabeller(ISystemClock systemClock)
+		public BzrRevisionLabeller(ISystemClock systemClock)
 		{
 			_systemClock = systemClock;
 
@@ -75,7 +75,7 @@ namespace CcNet.Labeller
 			Minor = 0;
 			Build = -1;
 			Pattern = "{major}.{minor}.{build}.{revision}";
-			Executable = "svn.exe";
+			Executable = "bzr.exe";
 			ResetBuildAfterVersionChange = true;
 
 			_rebuild = 0;
@@ -131,7 +131,7 @@ namespace CcNet.Labeller
 		public bool ResetBuildAfterVersionChange { get; set; }
 
 		/// <summary>
-		/// Gets or sets the path to the Subversion executable.
+		/// Gets or sets the path to the Bazaar executable.
 		/// </summary>
 		/// <remarks>
 		/// By default, the labeller checks the <c>PATH</c> environment variable.
@@ -141,23 +141,23 @@ namespace CcNet.Labeller
 		public string Executable { get; set; }
 
 		/// <summary>
-		/// Gets or sets the username that will be used to access the Subversion repository.
+		/// Gets or sets the username that will be used to access the Bazaar repository.
 		/// </summary>
 		/// <value>The username.</value>
 		[ReflectorProperty("username", Required = false)]
 		public string Username { get; set; }
 
 		/// <summary>
-		/// Gets or sets the password that will be used to access the Subversion repository.
+		/// Gets or sets the password that will be used to access the Bazaar repository.
 		/// </summary>
 		/// <value>The password.</value>
 		[ReflectorProperty("password", Required = false)]
 		public string Password { get; set; }
 
 		/// <summary>
-		/// Gets or sets the URL that will be used to access the Subversion repository.
+		/// Gets or sets the URL that will be used to access the Bazaar repository.
 		/// </summary>
-		/// <value>A string representing the URL of the Subversion repository.</value>
+		/// <value>A string representing the URL of the Bazaar repository.</value>
 		[ReflectorProperty("url", Required = true)]
 		public string Url { get; set; }
 
@@ -200,7 +200,7 @@ namespace CcNet.Labeller
 		/// <exception cref="System.ArgumentNullException">Thrown when an error occurs while formatting the version number and an argument has not been specified.</exception>
 		public string Generate(IIntegrationResult resultFromLastBuild)
 		{
-			// get last revision from Subversion
+			// get last revision from Bazaar
 			int revision = GetRevision();
 
 			// get last revision from CC
@@ -293,10 +293,10 @@ namespace CcNet.Labeller
 		}
 
 		/// <summary>
-		/// Gets the latest Subversion revision by checking the last log entry.
+		/// Gets the latest Bazaar revision by checking the last log entry.
 		/// </summary>
 		/// <remarks>
-		/// If an error occurs while parsing the Subversion log, the revision number will be returned
+		/// If an error occurs while parsing the Bazaar log, the revision number will be returned
 		/// as a <c>0</c>.
 		/// </remarks>
 		/// <returns>The last revision number.</returns>
@@ -305,8 +305,8 @@ namespace CcNet.Labeller
 			// Set up the command-line arguments required
 			ProcessArgumentBuilder argBuilder = new ProcessArgumentBuilder();
 			argBuilder.AppendArgument("log");
-			argBuilder.AppendArgument("--xml");
-			argBuilder.AppendArgument("--limit 1");
+            argBuilder.AppendArgument("-r -1");
+            argBuilder.AppendArgument("--xml");
 			argBuilder.AddArgument(Quote(Url));
 
 			if (TrustServerCertificate)
@@ -319,8 +319,8 @@ namespace CcNet.Labeller
 				AppendCommonSwitches(argBuilder);
 			}
 
-			// Run the svn log command and capture the results
-			ProcessResult result = RunSvnProcess(argBuilder);
+			// Run the bzr log command and capture the results
+			ProcessResult result = RunBzrProcess(argBuilder);
 			Log.Debug("Received XML : " + result.StandardOutput);
 
 			try
@@ -352,7 +352,7 @@ namespace CcNet.Labeller
 		}
 
 		/// <summary>
-		/// Ensures that the SVN URL is surrounded with quotation marks, so that paths with 
+		/// Ensures that the BZR URL is surrounded with quotation marks, so that paths with 
 		/// spaces in them do not cause an exception.
 		/// </summary>
 		/// <param name="urlToBeQuoted">The URL to be quoted.</param>
@@ -363,23 +363,23 @@ namespace CcNet.Labeller
 		}
 
 		/// <summary>
-		/// Appends the arguments required to authenticate against Subversion.
+		/// Appends the arguments required to authenticate against Bazaar.
 		/// </summary>
 		/// <param name="buffer">The argument builder.</param>
 		protected virtual void AppendCommonSwitches(ProcessArgumentBuilder buffer)
 		{
-			buffer.AddArgument("--username", Username);
-			buffer.AddArgument("--password", Password);
-			buffer.AddArgument("--non-interactive");
-			buffer.AddArgument("--no-auth-cache");
+			//buffer.AddArgument("--username", Username);
+			//buffer.AddArgument("--password", Password);
+			//buffer.AddArgument("--non-interactive");
+			//buffer.AddArgument("--no-auth-cache");
 		}
 
 		/// <summary>
-		/// Runs the Subversion process.
+		/// Runs the Bazaar process.
 		/// </summary>
 		/// <param name="arguments">The command-line arguments.</param>
 		/// <returns>The results of executing the process including output.</returns>
-		protected virtual ProcessResult RunSvnProcess(ProcessArgumentBuilder arguments)
+		protected virtual ProcessResult RunBzrProcess(ProcessArgumentBuilder arguments)
 		{
 			// prepare process
 			ProcessInfo info = new ProcessInfo(Executable, arguments.ToString());

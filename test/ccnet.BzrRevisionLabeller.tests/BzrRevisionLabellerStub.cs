@@ -1,6 +1,6 @@
 namespace CcNet.Labeller.Tests
 {
-	public class BzrRevisionLabellerStub : SvnRevisionLabeller
+	public class BzrRevisionLabellerStub : BzrRevisionLabeller
 	{
 		public BzrRevisionLabellerStub()
 		{
@@ -10,9 +10,9 @@ namespace CcNet.Labeller.Tests
 		{
 		}
 
-		public void SetRevision(int svnRevision)
+		public void SetRevision(int bzrRevision)
 		{
-			_revision = svnRevision;
+			_revision = bzrRevision;
 		}
 
 		protected override int GetRevision()
