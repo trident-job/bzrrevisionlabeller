@@ -158,8 +158,8 @@ namespace CcNet.Labeller
 		/// Gets or sets the URL that will be used to access the Bazaar repository.
 		/// </summary>
 		/// <value>A string representing the URL of the Bazaar repository.</value>
-		[ReflectorProperty("url", Required = true)]
-		public string Url { get; set; }
+        [ReflectorProperty("branchUrl", Required = true)]
+		public string branchUrl { get; set; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether the server certificate should 
@@ -307,7 +307,7 @@ namespace CcNet.Labeller
 			argBuilder.AppendArgument("log");
             argBuilder.AppendArgument("-r -1");
             argBuilder.AppendArgument("--xml");
-			argBuilder.AddArgument(Quote(Url));
+			argBuilder.AddArgument(Quote(branchUrl));
 
 			if (TrustServerCertificate)
 			{
