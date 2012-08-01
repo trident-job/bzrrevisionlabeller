@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<sourcemonitor_commands>
+	<write_log>true</write_log>
+	<parse_utf8_files>true</parse_utf8_files>
+	<command>
+		<project_file>BzrRevisionLabeller.smp</project_file>
+		<project_language>C#</project_language>
+        <file_extensions>*.cs</file_extensions>
+		<source_directory>../../src</source_directory>
+		<include_subdirectories>true</include_subdirectories>
+		<export>
+			<export_file>SourceMonitor_summary.xml</export_file>
+			<export_type>1</export_type>
+		</export>
+	</command>
+	<command>
+		<project_file>BzrRevisionLabeller.smp</project_file>
+        <file_extensions>*.cs</file_extensions>
+		<export>
+			<export_file>SourceMonitor_details.xml</export_file>
+			<export_type>2</export_type>
+		</export>
+	<delete_checkpoint />
+  </command>
+</sourcemonitor_commands>
