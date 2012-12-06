@@ -27,9 +27,11 @@ namespace CcNet.Labeller.Tests
 
 			_mockery.ReplayAll();
 
-			_labeller = new BzrRevisionLabellerStub(fakeSystemClock)
+            DateTime myDateTime = new DateTime (2010,8,20,0,0,0);
+            _labeller = new BzrRevisionLabellerStub(fakeSystemClock)
 				{
-					StartDate = "20/08/2010",
+                    // Use system date instead of hard coded string date !
+                    StartDate = myDateTime.ToShortDateString(),
 					Pattern = "1.0.{date}.0"
 				};
 			_labeller.SetRevision(0);
