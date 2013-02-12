@@ -15,7 +15,7 @@
 	</command>
 	<command>
 		<project_file>BzrRevisionLabeller.smp</project_file>
-        <file_extensions>*.cs</file_extensions>
+		<include_subdirectories>true</include_subdirectories>
 		<export>
 			<export_file>SourceMonitor_details.xml</export_file>
 			<export_type>2</export_type>
