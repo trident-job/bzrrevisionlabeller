@@ -3,3 +3,7 @@
 ./src/ccnet.BzrRevisionLabeller.plugin/obj
 ./test/ccnet.BzrRevisionLabeller.tests/obj
 ./test/ccnet.BzrRevisionLabeller.tests/bin
+./.klocwork
+./BzrRevisionLabeller.v12.suo
+./src/ccnet.BzrRevisionLabeller.plugin/ccnet.BzrRevisionLabeller.plugin.out
+./src/ccnet.BzrRevisionLabeller.plugin/my_tables

@@ -331,7 +331,14 @@ namespace CcNet.Labeller
 
 				// Retrieve the revision number from the XML
 				XmlNode node = xml.SelectSingleNode(RevisionXPath);
-				return Convert.ToInt32(node.InnerText);
+                if (node != null)
+                {
+                    return Convert.ToInt32(node.InnerText);
+                }
+                else
+                {
+                    return 0;
+                }
 			}
 			catch (XmlException)
 			{
